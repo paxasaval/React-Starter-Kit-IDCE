@@ -13,6 +13,7 @@
   --bg-secondary: #041035;
   --bg-neutral: #eaedf7;
   --bg-danger: #d9534f;
+  --bg-link: #0000EE;
 
   --btn-primary: #337ab7;
   --btn-primary-hover: #296293;
@@ -51,10 +52,11 @@
 .btn-danger:hover{
   background-color: var(--btn-danger-hover) !important;
 }
+
+/* Generic Button - devExtrene */
 .dx-button-mode-contained .dx-icon {
   color: inherit !important;
 }
-/* Generic Button - devExtrene */
 .btn-primary .dx-button-content {
   background-color: var(--btn-primary);
   border-color: var(--btn-primary);
@@ -104,14 +106,18 @@ code {
   font-weight: bold;
 }
 
-/* Baground default */
+/* Badgrounds */
 .bg-default {
   background: url("../public/images/fondo2.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
-/* Baground default */
+.bg-neutral{
+  background-color: var(--bg-neutral);
+}
+
+/* Generic elemets */
 .card {
   background-color: white;
   border-radius: 1rem;
@@ -120,4 +126,7 @@ code {
     0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.link{
+  color: var(--bg-link);
 }

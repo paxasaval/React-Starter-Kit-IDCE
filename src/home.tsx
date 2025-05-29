@@ -23,9 +23,7 @@ import { Column, Pager, Paging } from "devextreme-react/data-grid";
 import { SimpleItem } from "devextreme-react/form";
 import Swal from "sweetalert2";
 import ReactECharts from "echarts-for-react";
-
-
-
+import { ToastContainer, toast } from "react-toastify";
 //Component buttons
 const Buttons = () => {
   return (
@@ -61,8 +59,10 @@ const Buttons = () => {
 //Component titles
 const Titles = () => {
   return (
-    <div className="flex justify-center gap-4">
+    <div className="flex flex-col justify-center items-start gap-1 self-start">
       <h1 className="subtitle">Titulo 1</h1>
+      <span className="span">Span</span>
+      <p>Text</p>
     </div>
   );
 };
@@ -146,8 +146,10 @@ const DataGridDevExtreme = () => {
     setIsUpdateModalVisible(false);
   };
   const handleUpdateGrid = (e: any) => {
-    console.log(e);
-    setIsUpdateModalVisible(true)
+    const data = e.row.data;
+    console.log(data);
+    setFormDataUpadte(data);
+    setIsUpdateModalVisible(true);
   };
   const updateData = () => {
     console.log("Actualizando datos:", formDataUpdate);
@@ -186,7 +188,7 @@ const DataGridDevExtreme = () => {
               title: "Éxito",
               text: "La provincia ha sido eliminado correctamente.",
             });
-            executeProvincia();//Reejecutar la funcion de consultar datos dataGrid
+            executeProvincia(); //Reejecutar la funcion de consultar datos dataGrid
           }
         } catch (error) {
           console.error("Error al eliminar Catalogo:", error);
@@ -298,11 +300,6 @@ const DataGridDevExtreme = () => {
             <SimpleItem dataField="peso" editorOptions={{ width: "100%" }}>
               <RequiredRule message="El peso es requerido" />
             </SimpleItem>
-            {/* Este campo es solo informativo, muestra el catálogo seleccionado */}
-            <SimpleItem
-              label={{ text: "Catálogo Seleccionado" }}
-              editorType="dxTextBox"
-            />
           </Form>
 
           <div
@@ -355,13 +352,18 @@ const DataGridDevExtreme = () => {
             <SimpleItem dataField="codigo" editorOptions={{ width: "100%" }}>
               <RequiredRule message="El código es requerido" />
             </SimpleItem>
-            <SimpleItem dataField="valor" editorOptions={{ width: "100%" }}>
-              <RequiredRule message="El valor es requerido" />
+            <SimpleItem dataField="nombre" editorOptions={{ width: "100%" }}>
+              <RequiredRule message="El nombre es requerido" />
             </SimpleItem>
-            <SimpleItem
-              label={{ text: "Catálogo Seleccionado" }}
-              editorType="dxTextBox"
-            />
+            <SimpleItem dataField="paisIso2" editorOptions={{ width: "100%" }}>
+              <RequiredRule message="El paisIso2 es requerido" />
+            </SimpleItem>
+            <SimpleItem dataField="region" editorOptions={{ width: "100%" }}>
+              <RequiredRule message="El region es requerido" />
+            </SimpleItem>
+            <SimpleItem dataField="peso" editorOptions={{ width: "100%" }}>
+              <RequiredRule message="El peso es requerido" />
+            </SimpleItem>
           </Form>
 
           <div
@@ -474,14 +476,119 @@ const Echarts = () => {
   );
 };
 
+//Component Documentacion
+const Documentation = () => {
+  return (
+    <div className="w-full flex flex-col items-start gap-4">
+      <div className="item flex gap-2">
+        <span className="span">DevExtreme:</span>
+        <a
+          className="link"
+          href="https://js.devexpress.com/React/Documentation/22_2/Guide/React_Components/DevExtreme_React_Components/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://js.devexpress.com/React/
+        </a>
+      </div>
+      <div className="item flex gap-2">
+        <span className="span">ECharts:</span>
+        <a
+          className="link"
+          href="https://echarts.apache.org/examples/en/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://echarts.apache.org
+        </a>
+      </div>
+      <div className="item flex gap-2">
+        <span className="span">Tailwind:</span>
+        <a
+          className="link"
+          href="https://tailwindcss.com/docs/styling-with-utility-classes"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://tailwindcss.com
+        </a>
+      </div>
+      <div className="item flex gap-2">
+        <span className="span">Ant Design:</span>
+        <a
+          className="link"
+          href="https://ant.design/components/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://ant.design/components/overview
+        </a>
+      </div>
+      <div className="item flex gap-2">
+        <span className="span">Toastify:</span>
+        <a
+          className="link"
+          href="https://fkhadra.github.io/react-toastify/introduction/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://fkhadra.github.io/react-toastify/introduction/
+        </a>
+      </div>
+      <div className="item flex gap-2">
+        <span className="span">SweetAlert2:</span>
+        <a
+          className="link"
+          href="https://sweetalert2.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://sweetalert2.github.io/
+        </a>
+      </div>
+    </div>
+  );
+};
+
+//Component Alerts
+const Alerts = () => {
+  const openSweetAlert = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Éxito",
+      text: "Mensaje de prueba.",
+    });
+  };
+  const openToast = () => {
+    toast("Mensaje Toast");
+  };
+  return (
+    <div className="flex flex-col gap-4">
+      <Button
+        text="Open SweetAlert"
+        type="normal"
+        stylingMode="contained"
+        onClick={openSweetAlert}
+      />
+      <Button
+        text="Open Toastify"
+        type="normal"
+        stylingMode="contained"
+        onClick={openToast}
+      />
+      <ToastContainer position="top-center" />
+    </div>
+  );
+};
+
 //Default component Home/Page
 const Home = () => {
   const [modalChart, setModalChart] = useState<number | null>(null);
   return (
-    <div className="w-screen h-screen p-4 bg-blue-500 flex flex-col gap-4 overflow-y-auto">
-      <h1 className="subtitle"> React Starter Kit IDCE</h1>
-      <h2 className="subtitle text-white">Botones:</h2>
-      <div className="card w-full min-h-52 p-4 flex gap-4 justify-center items-center relative">
+    <div className="w-screen h-screen p-4 bg-neutral flex flex-wrap gap-4 justify-between overflow-y-auto">
+      <h1 className="subtitle w-full text-black">React Starter Kit IDCE</h1>
+      <div className="card w-auto min-h-52 p-4 flex flex-col gap-4 justify-center items-center relative">
+        <h2 className="subtitle text-black">Botones</h2>
         <div className="btn-modal absolute top-2 right-3">
           <AntButton
             icon={<ExportOutlined />}
@@ -493,8 +600,22 @@ const Home = () => {
         </div>
         <Buttons />
       </div>
-      <h2 className="subtitle text-white">Textos:</h2>
-      <div className="card w-full min-h-52 p-4 flex gap-4 justify-center items-center relative">
+      <div className="card w-1/6 min-h-52 p-4 flex flex-col gap-4 justify-center items-center relative">
+        <h2 className="subtitle text-black">Alertas</h2>
+        <div className="btn-modal absolute top-2 right-3">
+          <AntButton
+            icon={<ExportOutlined />}
+            onClick={() => setModalChart(6)}
+            variant="solid"
+            size="small"
+            className="btn-primary"
+          />
+        </div>
+        <Alerts />
+      </div>
+      <div className="card w-1/6 min-h-52 p-4 flex flex-col gap-4 justify-center items-center relative">
+        <h2 className="subtitle text-black">Textos:</h2>
+
         <div className="btn-modal absolute top-2 right-3">
           <AntButton
             icon={<ExportOutlined />}
@@ -506,8 +627,22 @@ const Home = () => {
         </div>
         <Titles />
       </div>
-      <h2 className="subtitle text-white">DataGrid:</h2>
+      <div className="card w-auto h-auto p-4 flex flex-col gap-4 justify-center items-center relative">
+        <h2 className="subtitle text-black">Documentacion</h2>
+        <div className="btn-modal absolute top-2 right-3">
+          <AntButton
+            icon={<ExportOutlined />}
+            onClick={() => setModalChart(5)}
+            variant="solid"
+            size="small"
+            className="btn-primary"
+          />
+        </div>
+        <Documentation />
+      </div>
       <div className="card w-full h-auto p-4 flex flex-col gap-4 justify-center items-center relative">
+        <h2 className="subtitle text-black">DataGrid</h2>
+
         <div className="btn-modal absolute top-2 right-3">
           <AntButton
             icon={<ExportOutlined />}
@@ -519,8 +654,9 @@ const Home = () => {
         </div>
         <DataGridDevExtreme />
       </div>
-      <h2 className="subtitle text-white">Chart:</h2>
       <div className="card w-full h-auto p-4 flex flex-col gap-4 justify-center items-center relative">
+        <h2 className="subtitle text-black">Chart</h2>
+
         <div className="btn-modal absolute top-2 right-3">
           <AntButton
             icon={<ExportOutlined />}
@@ -532,12 +668,15 @@ const Home = () => {
         </div>
         <Echarts />
       </div>
+
       {modalChart && (
         <ModalFullscreen onClose={() => setModalChart(null)}>
           {modalChart === 1 && <Buttons />}
           {modalChart === 2 && <Titles />}
           {modalChart === 3 && <DataGridDevExtreme />}
           {modalChart === 4 && <Echarts />}
+          {modalChart === 5 && <Documentation />}
+          {modalChart === 6 && <Alerts />}
         </ModalFullscreen>
       )}
     </div>
