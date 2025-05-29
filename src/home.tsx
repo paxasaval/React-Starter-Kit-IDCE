@@ -24,6 +24,8 @@ import { SimpleItem } from "devextreme-react/form";
 import Swal from "sweetalert2";
 import ReactECharts from "echarts-for-react";
 
+
+
 //Component buttons
 const Buttons = () => {
   return (
@@ -109,7 +111,7 @@ const DataGridDevExtreme = () => {
     e.toolbarOptions.items = e.toolbarOptions.items.filter(
       (items: any) => items.name !== "addRowButton"
     );
-    // Agrega el botón "Nuevo"
+    // Agrega el botón "Nuevo" y Demas botones personalizados
     e.toolbarOptions.items.push({
       //unshift
       location: "after",
@@ -126,8 +128,11 @@ const DataGridDevExtreme = () => {
   const hideModalCreate = () => {
     setIsCreateModalVisible(false);
   };
+
   const saveData = () => {
     console.log("Guardando datos:", formData);
+    //Aqui va la logica de guardar
+    //
     hideModalCreate();
     Swal.fire({
       icon: "success",
@@ -142,14 +147,16 @@ const DataGridDevExtreme = () => {
   };
   const handleUpdateGrid = (e: any) => {
     console.log(e);
+    setIsUpdateModalVisible(true)
   };
   const updateData = () => {
     console.log("Actualizando datos:", formDataUpdate);
+    //Aqui va la logica de actualizar
     hideModalUpdate();
     Swal.fire({
       icon: "success",
       title: "Éxito",
-      text: "El catálogo ha sido actualizado correctamente.",
+      text: "La provincia ha sido actualizado correctamente.",
     });
   };
 
@@ -179,7 +186,7 @@ const DataGridDevExtreme = () => {
               title: "Éxito",
               text: "La provincia ha sido eliminado correctamente.",
             });
-            executeProvincia();
+            executeProvincia();//Reejecutar la funcion de consultar datos dataGrid
           }
         } catch (error) {
           console.error("Error al eliminar Catalogo:", error);
@@ -275,6 +282,7 @@ const DataGridDevExtreme = () => {
             colCount={1} // Este colCount afecta el nivel superior
             labelLocation="top"
           >
+            {/* Aqui se personaliza los inputs */}
             <SimpleItem dataField="codigo" editorOptions={{ width: "100%" }}>
               <RequiredRule message="El código es requerido" />
             </SimpleItem>
@@ -321,6 +329,7 @@ const DataGridDevExtreme = () => {
           </div>
         </ScrollView>
       </Popup>
+
       {/* Update Modal */}
       <Popup
         visible={isUpdateModalVisible}
@@ -342,13 +351,13 @@ const DataGridDevExtreme = () => {
             colCount={1}
             labelLocation="top"
           >
+            {/* Aqui se personaliza los inputs */}
             <SimpleItem dataField="codigo" editorOptions={{ width: "100%" }}>
               <RequiredRule message="El código es requerido" />
             </SimpleItem>
             <SimpleItem dataField="valor" editorOptions={{ width: "100%" }}>
               <RequiredRule message="El valor es requerido" />
             </SimpleItem>
-            {/* Este campo es solo informativo, muestra el catálogo seleccionado */}
             <SimpleItem
               label={{ text: "Catálogo Seleccionado" }}
               editorType="dxTextBox"
@@ -383,6 +392,7 @@ const DataGridDevExtreme = () => {
     </div>
   );
 };
+
 //Component Chart
 const Echarts = () => {
   const dataOptionsChart1 = {
@@ -463,6 +473,7 @@ const Echarts = () => {
     </div>
   );
 };
+
 //Default component Home/Page
 const Home = () => {
   const [modalChart, setModalChart] = useState<number | null>(null);
