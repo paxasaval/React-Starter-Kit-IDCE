@@ -106,6 +106,10 @@ code {
   font-weight: bold;
 }
 
+.link{
+  color: var(--bg-link);
+}
+
 /* Badgrounds */
 .bg-default {
   background: url("../public/images/fondo2.png");
@@ -127,6 +131,4 @@ code {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.link{
-  color: var(--bg-link);
-}
+

@@ -60,9 +60,10 @@ const Buttons = () => {
 const Titles = () => {
   return (
     <div className="flex flex-col justify-center items-start gap-1 self-start">
-      <h1 className="subtitle">Titulo 1</h1>
+      <h2 className="subtitle">Subtitulo</h2>
       <span className="span">Span</span>
       <p>Text</p>
+      <a href="#Link" className="link">Link</a>
     </div>
   );
 };
