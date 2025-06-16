@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { MouseEventHandler, useRef, useState } from "react";
 import logo from "./logo.svg";
 import { Button, DataGrid, Form, Popup, ScrollView } from "devextreme-react";
 import {
@@ -11,9 +11,9 @@ import {
   SearchPanel,
   Texts,
 } from "devextreme-react/data-grid";
-import { Button as AntButton } from "antd";
+import { Button as AntButton, FloatButton } from "antd";
 import ModalFullscreen from "./shared/modalFullScreen";
-import { ExportOutlined } from "@ant-design/icons";
+import { ExportOutlined, SettingFilled } from "@ant-design/icons";
 import useService from "./hooks/useService";
 import { GetUsuariosByInstitucionDTO } from "./types/user";
 import { getUsersByIntitucion } from "./services/userService";
@@ -23,6 +23,7 @@ import { Column, Pager, Paging } from "devextreme-react/data-grid";
 import { SimpleItem } from "devextreme-react/form";
 import Swal from "sweetalert2";
 import ReactECharts from "echarts-for-react";
+import { Drawer } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 //Component buttons
 const Buttons = () => {
@@ -55,7 +56,33 @@ const Buttons = () => {
     </div>
   );
 };
-
+//Component Floating Button
+interface FloatingButtonProps {
+  openDrawer: MouseEventHandler<HTMLButtonElement>;
+}
+const FloatingButton = ({ openDrawer }: FloatingButtonProps) => {
+  return (
+    <div className="flex flex-col justify-center items-center gap-1">
+      <FloatButton onClick={openDrawer} icon={<SettingFilled />}></FloatButton>
+    </div>
+  );
+};
+//Component Drawer
+interface DrawerProps {
+  open: boolean;
+  onClose: any;
+}
+const DrawerComponent = ({ open, onClose }: DrawerProps) => {
+  return (
+    <Drawer title="Drawer Basico" open={open} onClose={onClose}>
+      <div className="flex flex-col gap-2 items-center">
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </div>
+    </Drawer>
+  );
+};
 //Component titles
 const Titles = () => {
   return (
@@ -63,7 +90,9 @@ const Titles = () => {
       <h2 className="subtitle">Subtitulo</h2>
       <span className="span">Span</span>
       <p>Text</p>
-      <a href="#Link" className="link">Link</a>
+      <a href="#Link" className="link">
+        Link
+      </a>
     </div>
   );
 };
@@ -585,6 +614,12 @@ const Alerts = () => {
 //Default component Home/Page
 const Home = () => {
   const [modalChart, setModalChart] = useState<number | null>(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const handleDrawerToggle = () => {
+    console.log(openDrawer);
+    setOpenDrawer(!openDrawer);
+  };
   return (
     <div className="w-screen h-screen p-4 bg-neutral flex flex-wrap gap-4 justify-between overflow-y-auto">
       <h1 className="subtitle w-full text-black">React Starter Kit IDCE</h1>
@@ -669,7 +704,10 @@ const Home = () => {
         </div>
         <Echarts />
       </div>
-
+      {/* Drawer */}
+      <FloatingButton openDrawer={handleDrawerToggle} />
+      <DrawerComponent open={openDrawer} onClose={handleDrawerToggle} />
+      {/*End Drawer */}
       {modalChart && (
         <ModalFullscreen onClose={() => setModalChart(null)}>
           {modalChart === 1 && <Buttons />}
